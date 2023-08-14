@@ -1,21 +1,34 @@
 /** @jsxImportSource @emotion/react */
 import { css, SerializedStyles } from "@emotion/react";
 
-interface ButtonProps {
-  onClick: () => void;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   filled?: boolean;
+  disabled: boolean;
+  [key: string]: any;
 }
 
-const Button = ({ onClick, children, filled = false }: ButtonProps) => {
+const Button = ({
+  children,
+  filled = false,
+  disabled,
+  ...props
+}: ButtonProps) => {
   return (
-    <button css={getButtonStyles(filled)} onClick={onClick}>
+    <button
+      css={getButtonStyles(filled, disabled)}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );
 };
 
-const getButtonStyles = (filled: boolean): SerializedStyles => css`
+const getButtonStyles = (
+  filled: boolean,
+  disabled: boolean
+): SerializedStyles => css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -27,11 +40,18 @@ const getButtonStyles = (filled: boolean): SerializedStyles => css`
   background-color: ${filled ? "#71c9ce" : "transparent"};
   color: ${filled ? "white" : "#71c9ce"};
   transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
+  cursor: ${disabled ? "not-allowed" : "pointer"};
+  opacity: ${disabled ? 0.5 : 1};
 
   &:hover {
-    background-color: ${filled ? "#3FC1C9" : "#71c9ce"};
-    color: white;
+    background-color: ${disabled
+      ? filled
+        ? "#71c9ce"
+        : "transparent"
+      : filled
+      ? "#3FC1C9"
+      : "#71c9ce"};
+    color: ${disabled ? (filled ? "white" : "#71c9ce") : "white"};
   }
 `;
 
