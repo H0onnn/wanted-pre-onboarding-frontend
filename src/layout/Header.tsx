@@ -1,27 +1,54 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Button from "../components/UI/Button";
+import { colors } from "../constant/colors";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useTokenContext } from "../context/TokenContext";
 
 const Header = () => {
-  const handleSignInClick = () => {};
+  const navigate = useNavigate();
+  const { token: isLoggedin, removeTokenLocalStorage } = useTokenContext();
 
-  const handleSignUpClick = () => {};
+  const handleSignInClick = () => {
+    navigate("/signin");
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
+
+  const handleLogoutClick = () => {
+    removeTokenLocalStorage();
+    toast.success("정상적으로 로그아웃 되었습니다.", {
+      id: "logout-success",
+    });
+    navigate("/signin");
+  };
 
   return (
     <div css={headerContainer}>
       <div css={headerBox}>
         <span css={headerTitle}>Todo-List</span>
-        <div
-          css={{
-            display: "flex",
-            gap: "1rem",
-          }}
-        >
-          <Button onClick={handleSignInClick}>로그인</Button>
-          <Button onClick={handleSignUpClick} filled>
-            회원가입
+        {isLoggedin ? (
+          <Button disabled={false} onClick={handleLogoutClick}>
+            로그아웃
           </Button>
-        </div>
+        ) : (
+          <div
+            css={{
+              display: "flex",
+              gap: "1rem",
+            }}
+          >
+            <Button disabled={false} onClick={handleSignInClick}>
+              로그인
+            </Button>
+            <Button disabled={false} onClick={handleSignUpClick} filled>
+              회원가입
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -46,7 +73,7 @@ const headerBox = css`
 const headerTitle = css`
   font-size: 24px;
   font-weight: bold;
-  color: #71c9ce;
+  color: ${colors.primary};
   text-align: center;
 `;
 
