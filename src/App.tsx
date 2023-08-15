@@ -3,15 +3,18 @@ import AppRoutes from "./routes";
 import PageLayout from "./layout/PageLayout";
 import ToasterContext from "./context/ToasterContext";
 import { TokenProvider } from "./context/TokenContext";
+import { TodoProvider } from "./context/TodoContex";
 
 const App = () => {
   return (
     <Router>
       <TokenProvider>
-        <PageLayout>
-          <ToasterContext />
-          <AppRoutes />
-        </PageLayout>
+        <TodoProvider>
+          <PageLayout>
+            <ToasterContext />
+            <AppRoutes />
+          </PageLayout>
+        </TodoProvider>
       </TokenProvider>
     </Router>
   );
