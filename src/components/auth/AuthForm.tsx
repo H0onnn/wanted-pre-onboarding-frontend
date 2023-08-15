@@ -9,12 +9,14 @@ interface AuthFormProps {
 
 const AuthForm = ({ title, children }: AuthFormProps) => {
   return (
-    <div css={authForm}>
+    <form css={authForm}>
       <h1>{title}</h1>
       {children}
-    </div>
+    </form>
   );
 };
+
+export default AuthForm;
 
 const authForm = css`
   width: 100%;
@@ -32,5 +34,3 @@ const authForm = css`
     font-size: 34px;
   }
 `;
-
-export default AuthForm;
