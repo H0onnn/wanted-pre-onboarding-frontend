@@ -66,7 +66,7 @@ const headerBox = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 73rem;
+  width: 53rem;
   margin: 0 auto;
 `;
 
