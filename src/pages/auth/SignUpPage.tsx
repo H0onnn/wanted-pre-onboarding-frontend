@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 import useAuthForm from "../../hooks/useAuthForm";
 import AuthFields from "../../components/auth/AuthFileds";
 import AuthForm from "../../components/auth/AuthForm";
@@ -8,6 +9,7 @@ import { colors } from "../../constant/colors";
 import { toast } from "react-hot-toast";
 import { signup } from "../../api/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { useTokenContext } from "../../context/TokenContext";
 
 const SignUpPage = () => {
   const {
@@ -21,7 +23,15 @@ const SignUpPage = () => {
     handlePasswordChange,
   } = useAuthForm();
 
+  const { token } = useTokenContext();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate("/todo");
+    }
+  }, [token, navigate]);
 
   const handleSignupClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
