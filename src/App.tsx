@@ -3,7 +3,7 @@ import AppRoutes from "./routes";
 import PageLayout from "./layout/PageLayout";
 import ToasterContext from "./context/ToasterContext";
 import { TokenProvider } from "./context/TokenContext";
-import { TodoProvider } from "./context/TodoContex";
+import { TodoProvider } from "./context/TodoContext";
 
 const App = () => {
   return (
